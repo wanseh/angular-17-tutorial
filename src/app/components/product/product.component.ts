@@ -14,7 +14,12 @@ export class ProductComponent {
   @Input() product!: Product; // We use input to import the product data to home component // ! means that it ensure the product is not null and always provided.
   @Output() productOutput: EventEmitter<Product> = new EventEmitter<Product>();
 
-  ngOnInit() {
+  /**
+   * Initializes the component by emitting the product data to the parent component.
+   *
+   * @return {void} No return value.
+   */
+  ngOnInit(): void {
     /**
      * Emits the product data to the parent component.
      */

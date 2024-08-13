@@ -30,11 +30,26 @@ export class HomeComponent {
     console.log(product, 'Output');
   }
 
-  onPageChange(event: any) {
+  /**
+   * Handles a page change event by fetching products based on the new page and row settings.
+   *
+   * @param {any} event - The page change event containing the new page and row settings.
+   *
+   * @return {void} No return value.
+   */
+  onPageChange(event: any): void {
     this.fetchProducts(event.page, event.rows);
   }
 
-  fetchProducts(page: number, perPage: number) {
+  /**
+   * Fetches products from the server based on the provided page and per page settings.
+   *
+   * @param {number} page - The page number to fetch products from.
+   * @param {number} perPage - The number of products to fetch per page.
+   *
+   * @return {void} No return value.
+   */
+  fetchProducts(page: number, perPage: number): void {
     this.productsService
       .getProducts('http://localhost:3000/clothes', { page, perPage })
       .subscribe((products: Products) => {
