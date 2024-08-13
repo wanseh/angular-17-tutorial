@@ -12,4 +12,17 @@
     [readonly]="true"
     iconCancelClass="hidden"
   />
+
+  <div class="row">
+    <p-button
+      (onClick)="editProduct()"
+      icon="pi pi-pencil"
+      label="Edit"
+    />
+    <p-button
+      (onClick)="deleteProduct()"
+      icon="pi pi-trash"
+      label="Delete"
+    ></p-button>
+  </div>
 </div>

@@ -36,6 +36,7 @@ export interface Products {
 }
 
 export interface Product {
+  id?: number; // ? mean optional property in interface type product
   price: string;
   name: string;
   image: string;
