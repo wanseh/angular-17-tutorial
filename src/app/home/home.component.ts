@@ -52,9 +52,79 @@ export class HomeComponent {
   fetchProducts(page: number, perPage: number): void {
     this.productsService
       .getProducts('http://localhost:3000/clothes', { page, perPage })
-      .subscribe((products: Products) => {
-        this.products = products.items;
-        this.totalRecords = products.total;
+      .subscribe({
+        next: (data: Products) => {
+          this.products = data.items;
+          this.totalRecords = data.total;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+  }
+
+  /**
+   * Edits a product by sending a PUT request to the server with the updated product details.
+   *
+   * @param {Product} product - The updated product details.
+   * @param {number} id - The ID of the product to be edited.
+   *
+   * @return {void} No return value.
+   */
+  editProduct(product: Product, id: number): void {
+    this.productsService
+      .editProduct(`http://localhost:3000/clothes/${id}`, product)
+      .subscribe({
+        next: (data) => {
+          console.log(data, 'Edit');
+          this.fetchProducts(0, this.rows);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+  }
+
+  /**
+   * Deletes a product from the server based on the provided product and id.
+   *
+   * @param {Product} product - The product being deleted.
+   * @param {number} id - The id of the product to delete.
+   *
+   * @return {void} No return value.
+   */
+  deleteProduct(product: Product, id: number): void {
+    this.productsService
+      .deleteProduct(`http://localhost:3000/clothes/${id}`)
+      .subscribe({
+        next: (data) => {
+          console.log(data, 'Delete');
+          this.fetchProducts(0, this.rows);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+  }
+
+  /**
+   * Adds a new product to the server.
+   *
+   * @param {Product} product - The product to be added.
+   *
+   * @return {void} No return value.
+   */
+  addProduct(product: Product): void {
+    this.productsService
+      .addProduct(`http://localhost:3000/clothes`, product)
+      .subscribe({
+        next: (data) => {
+          console.log(data, 'Add');
+          this.fetchProducts(0, this.rows);
+        },
+        error: (error) => {
+          console.log(error);
+        },
       });
   }
 

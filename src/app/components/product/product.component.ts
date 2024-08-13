@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProductComponent {
   @Input() product!: Product; // We use input to import the product data to home component // ! means that it ensure the product is not null and always provided.
-  @Output() productOutput: EventEmitter<Product> = new EventEmitter<Product>();
+  @Output() productOutput: EventEmitter<Product> = new EventEmitter<Product>(); // this outputs the product data to home component
 
   /**
    * Initializes the component by emitting the product data to the parent component.
