@@ -1,27 +1,54 @@
 import { Component } from '@angular/core';
 import { ProductsService } from '../services/products.service';
-import { Products } from '../../types';
+import { Product, Products } from '../../types';
+import { ProductComponent } from '../components/product/product.component';
+import { CommonModule } from '@angular/common';
+import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [ProductComponent, CommonModule, PaginatorModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
   constructor(private productsService: ProductsService) {}
 
+  products: Product[] = [];
+  totalRecords: number = 0;
+  rows: number = 5;
+
+  /**
+   * Handles the output of a product.
+   *
+   * @param {Product} product - The product being output.
+   *
+   * @return {void} No return value.
+   */
+  onProductOutput(product: Product): void {
+    console.log(product, 'Output');
+  }
+
+  onPageChange(event: any) {
+    this.fetchProducts(event.page, event.rows);
+  }
+
+  fetchProducts(page: number, perPage: number) {
+    this.productsService
+      .getProducts('http://localhost:3000/clothes', { page, perPage })
+      .subscribe((products: Products) => {
+        this.products = products.items;
+        this.totalRecords = products.total;
+      });
+  }
+
   /**
    * Initializes the component and fetches products from the server.
    *
-   * @return {void} Logs the items of the fetched products to the console.
+   * @return {void} No return value. Gets products from the server and assigns them to the `products` property.
    */
-  ngOnInit() {
-    this.productsService
-      .getProducts('http://localhost:3000/clothes', { page: 0, perPage: 5 })
-      .subscribe((products: Products) => {
-        console.log(products.items);
-      });
+  ngOnInit(): void {
+    this.fetchProducts(0, this.rows);
   }
 }
