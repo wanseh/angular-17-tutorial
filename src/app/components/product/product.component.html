@@ -13,16 +13,20 @@
     iconCancelClass="hidden"
   />
 
-  <div class="row">
+  <div class="row gap-05">
     <p-button
       (onClick)="editProduct()"
       icon="pi pi-pencil"
       label="Edit"
     />
     <p-button
-      (onClick)="deleteProduct()"
+      (onClick)="confirmDelete()"
       icon="pi pi-trash"
       label="Delete"
+      #deleteButton
+      severity="danger"
     ></p-button>
   </div>
 </div>
+
+<p-confirmPopup></p-confirmPopup>

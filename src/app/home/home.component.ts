@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ProductsService } from '../services/products.service';
 import { Product, Products } from '../../types';
 import { ProductComponent } from '../components/product/product.component';
 import { CommonModule } from '@angular/common';
-import { PaginatorModule } from 'primeng/paginator';
+import { Paginator, PaginatorModule } from 'primeng/paginator';
 import { EditPopupComponent } from '../components/edit-popup/edit-popup.component';
 import { ButtonModule } from 'primeng/button';
 
@@ -22,6 +22,8 @@ import { ButtonModule } from 'primeng/button';
 })
 export class HomeComponent {
   constructor(private productsService: ProductsService) {}
+
+  @ViewChild('paginator') paginator: Paginator | undefined;
 
   products: Product[] = [];
 
@@ -49,7 +51,11 @@ export class HomeComponent {
   }
 
   toggleDeletePopup(product: Product) {
-    console.log(product, 'Delete');
+    if (!product.id) {
+      return;
+    }
+  
+    this.deleteProduct(product.id);
   }
 
   onConfirmEdit(product: Product) {
@@ -86,6 +92,10 @@ export class HomeComponent {
    */
   onPageChange(event: any): void {
     this.fetchProducts(event.page, event.rows);
+  }
+
+  resetPaginator() {
+    this.paginator?.changePage(0);
   }
 
   /**
@@ -125,6 +135,7 @@ export class HomeComponent {
         next: (data) => {
           console.log(data, 'Edit');
           this.fetchProducts(0, this.rows);
+          this.resetPaginator();
         },
         error: (error) => {
           console.log(error);
@@ -140,13 +151,14 @@ export class HomeComponent {
    *
    * @return {void} No return value.
    */
-  deleteProduct(product: Product, id: number): void {
+  deleteProduct(id: number): void {
     this.productsService
       .deleteProduct(`http://localhost:3000/clothes/${id}`)
       .subscribe({
         next: (data) => {
           console.log(data, 'Delete');
           this.fetchProducts(0, this.rows);
+          this.resetPaginator();
         },
         error: (error) => {
           console.log(error);
@@ -168,6 +180,7 @@ export class HomeComponent {
         next: (data) => {
           console.log(data, 'Add');
           this.fetchProducts(0, this.rows);
+          this.resetPaginator();
         },
         error: (error) => {
           console.log(error);
