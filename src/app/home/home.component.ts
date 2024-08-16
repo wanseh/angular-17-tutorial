@@ -41,7 +41,14 @@ export class HomeComponent {
     rating: 0,
   };
 
-  toggleEditPopup(product: Product) {
+  /**
+   *  Toggles the edit popup for a given product.
+   *
+   *  @param {Product} product - The product to edit.
+   *
+   *  @return {void} 
+   */
+  toggleEditPopup(product: Product): void {
     this.selectedProduct = product;
     this.displayEditPopup = true;
   }

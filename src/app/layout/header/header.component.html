@@ -1,3 +1,10 @@
-<header class="wrapper row full-center">
+<header class="wrapper row space-between">
     <img src="assets/images/oc-logo.svg" alt="Logo Image" class="logo">
+
+    <div class="row gap-1">
+        <!-- Both links are in bold which means both are active. So we need to use [routerLinkActiveOptions]="{exact: true} 
+             since "/" also exists in the path -->
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a routerLink="/about-us" routerLinkActive="active">About</a>
+    </div>
 </header>
