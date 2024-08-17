@@ -1,0 +1,3 @@
+Pipes allows us to pass our variables through functions within the HTML itself
+
+Pipes are used when there are certain functions that needs to be used throughout the app so we don't have keep hard coding it 
